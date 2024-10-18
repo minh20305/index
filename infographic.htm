@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic về Triết học</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const sections = document.querySelectorAll(".section");
+            const details = document.getElementById("details");
+            const detailsContent = document.getElementById("details-content");
+            const closeDetailsButton = document.getElementById("close-details");
+
+            let fullscreenSection = null;
+
+            sections.forEach(section => {
+                section.addEventListener("click", function () {
+                    if (!section.classList.contains("fullscreen")) {
+                        expandToFullscreen(section);
+                    }
+                });
+            });
+
+            function expandToFullscreen(section) {
+                if (fullscreenSection) {
+                    closeFullscreen(fullscreenSection);
+                }
+
+                section.classList.add("fullscreen");
+                const closeButton = document.createElement("button");
+                closeButton.id = "close-fullscreen";
+                closeButton.innerText = "X";
+                section.appendChild(closeButton);
+
+                const detailsContent = document.createElement("div");
+                detailsContent.className = "details";
+                detailsContent.innerHTML = getSectionDetails(section.id);
+                section.appendChild(detailsContent);
+
+                closeButton.addEventListener("click", function () {
+                    closeFullscreen(section);
+                });
+
+                fullscreenSection = section;
+            }
+
+            function closeFullscreen(section) {
+                section.classList.remove("fullscreen");
+                const closeButton = section.querySelector("#close-fullscreen");
+                const detailsContent = section.querySelector(".details");
+
+                if (closeButton) closeButton.remove();
+                if (detailsContent) detailsContent.remove();
+
+                fullscreenSection = null;
+            }
+
+            function getSectionDetails(sectionId) {
+                switch (sectionId) {
+                    case "metaphysics":
+                        return "<h2>Siêu hình học</h2><p>Siêu hình học nghiên cứu về bản chất của thực tại, những gì tồn tại và bản chất của sự tồn tại.</p>";
+                    case "epistemology":
+                        return "<h2>Tri thức luận</h2><p>Tri thức luận tìm hiểu về nguồn gốc, bản chất và phạm vi của kiến thức.</p>";
+                    case "ethics":
+                        return "<h2>Đạo đức học</h2><p>Đạo đức học nghiên cứu về các nguyên tắc đạo đức và các hành động đúng sai.</p>";
+                    case "political-philosophy":
+                        return "<h2>Triết học chính trị</h2><p>Triết học chính trị xem xét các khái niệm về quyền lực, công lý và tự do.</p>";
+                    case "philosophy-of-language":
+                        return "<h2>Triết học ngôn ngữ</h2><p>Triết học ngôn ngữ nghiên cứu về vai trò của ngôn ngữ trong giao tiếp và suy nghĩ.</p>";
+                    default:
+                        return "<p>Không tìm thấy thông tin.</p>";
+                }
+            }
+            detailsContent.innerHTML = content;
+            details.classList.remove("hidden");
+            closeDetailsButton.addEventListener("click", function () {
+                    details.classList.add("hidden");
+                });    
+            });
+    </script>
+</head>
+<body>
+    <div class="infographic">
+        <div class="section" id="metaphysics">
+            <h2>Siêu hình học</h2>
+        </div>
+        <div class="section" id="epistemology">
+            <h2>Tri thức luận</h2>
+        </div>
+        <div class="section" id="ethics">
+            <h2>Đạo đức học</h2>
+        </div>
+        <div class="section" id="political-philosophy">
+            <h2>Triết học chính trị</h2>
+        </div>
+        <div class="section" id="philosophy-of-language">
+            <h2>Triết học ngôn ngữ</h2>
+        </div>
+    </div>
+
+    <div id="details" class="details hidden">
+        <button id="close-details">X</button>
+        <div id="details-content"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
